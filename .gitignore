@@ -1,0 +1,5 @@
+.env
+last_notice.txt
+notice.pdf
+__pycache__/
+*.pyc
