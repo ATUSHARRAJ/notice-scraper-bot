@@ -36,6 +36,7 @@ jobs:
           git config --global user.email "bot@github.com"
           git config --global user.name "Notice Bot"
           git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
+          git pull origin main
           touch last_notice.txt
           git add last_notice.txt
           git diff --staged --quiet || git commit -m "update last_notice.txt"
