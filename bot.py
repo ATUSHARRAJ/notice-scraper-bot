@@ -191,11 +191,7 @@ def check_notice():
 
 if __name__ == "__main__":
     print("🤖 BIT Sindri Notice Bot started.")
-
-    while True:
-        try:
-            check_notice()
-        except Exception as e:
-            print(f"❌ Error: {e}")
-
-        time.sleep(CHECK_INTERVAL)
+    try:
+        check_notice()
+    except Exception as e:
+        print(f"❌ Error: {e}")

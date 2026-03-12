@@ -1,0 +1,37 @@
+name: BIT Sindri Notice Bot
+
+on:
+  schedule:
+    - cron: '0 */10 * * *'
+  workflow_dispatch:
+
+jobs:
+  run-bot:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run bot
+        env:
+          EMAIL_SENDER: ${{ secrets.EMAIL_SENDER }}
+          EMAIL_PASSWORD: ${{ secrets.EMAIL_SENDER }}
+          EMAIL_RECEIVER: ${{ secrets.EMAIL_RECEIVER }}
+        run: python bot.py
+
+      - name: Save last notice
+        run: |
+          git config --global user.email "bot@github.com"
+          git config --global user.name "Notice Bot"
+          git add last_notice.txt
+          git diff --staged --quiet || git commit -m "update last_notice.txt"
+          git push
